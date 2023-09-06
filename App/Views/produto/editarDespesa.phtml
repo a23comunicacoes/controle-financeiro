@@ -1,0 +1,63 @@
+<?php
+if (isset($_POST['update'])) {
+    $url = $_POST['update'];
+}
+
+?>
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+        <h1>Alterar despesa</h1>
+        <hr>
+        <form action="alterarDespesa" method="post">
+            <input type="hidden" name="update" value="<?= $url ?>">
+            <input type="hidden" name="id" class="form-control" id="formGroupExampleInput" value="<?= $this->view->getProdById['id'] ?>">
+            <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Nome</label>
+                <input type="text" name="despesa" class="form-control" id="formGroupExampleInput" value="<?= $this->view->getProdById['despesa'] ?>">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Descrição</label>
+                <input type="text" name="descricao" value="<?= $this->view->getProdById['descricao'] ?>" class="form-control" id="formGroupExampleInput2" placeholder="descrição">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Valor</label>
+                <input type="text" name="valor" class="form-control" value="<?= $this->view->getProdById['valor'] ?>" id="formGroupExampleInput2" placeholder="R$">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Categoria</label>
+                <select name="categoria" id="formGroupExampleInput2" class="form-control">
+                    <option value=""><?= $this->view->getProdById['categoria'] ?></option>
+                    <?php foreach ($this->view->categorias as $categoria) { ?>
+                        <option value="<?= $categoria['nome_categoria'] ?>">
+                            <?= $categoria['nome_categoria'] ?>
+                        </option>
+
+                    <?php } ?>
+
+                </select>
+
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Data e vencimento</label>
+                <input type="date" name="data_vencimento" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder" value="<?= $this->view->getProdById['data_vencimento'] ?>">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Status</label>
+                <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder" value="<?= $this->view->getProdById['status'] ?>" readonly="true">
+            </div>
+            <div class="mb-3">
+                <button type="submit" class=" form-control btn btn-primary">Salvar</button>
+            </div>
+            <div class="mb-3">
+                <a href="/despesas" class=" form-control btn btn-danger">Cancelar</a>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>

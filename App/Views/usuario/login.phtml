@@ -1,0 +1,34 @@
+
+<div class="body_home">
+    <div class="card card-campo">
+        <div class="card-body">
+            <b style="color: #FFD700;font-size: 1.8rem"> O Controle das suas Finanças na palma da mâo. </b>
+           
+            <p style="font-size: 1.5rem; color:white;"> Entrar </p>
+
+            <form method="POST" action="/autenticar"> 
+                <input type="email" name="email" id="email" class="form-control input-form" placeholder="Entre com seu email"
+                    style=" border: 1px solid #000000; border-bottom: 1px solid #36648B;">
+                <p></p>
+                <input type="password" name="senha" class="form-control input-form" placeholder="Entre com a senha">
+                <p></p>
+                <a href="/cadastro" class="text-link-cadastro" style="text-decoration: none;">Não tem uma conta?
+                    Cadastre-se</a>
+                <p></p>
+                <button type="submit" value="Login" class="btn btn- btn-sm botao_login">Entrar na conta</button>
+                <?php if ($this->view->login == 'erro') {  ?>
+                <div class="row">
+                    <div class="col">
+                        <span class="text text-danger">*E-mail ou senha invalido(s).</span>
+                    </div>
+                </div>
+                <?php } ?>
+            </form>
+        </div>
+    </div>
+    <div class="card card-segundo-campo">
+        <a href="#" style="font-size:1rem; margin-left: 5%; color: #9C9C9C; text-decoration:none;"><i
+                class="fa-solid fa-key"></i> Esqueceu a senha ?</a>
+    </div>
+</div>
+</div>

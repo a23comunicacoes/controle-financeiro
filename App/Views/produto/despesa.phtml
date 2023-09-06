@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+        <h1 style="color: white;">Adicionar nova despesa</h1>
+        <hr>
+        <form action="salvarDespesa" method="post">
+            <?php
+            if ($this->view->erroProduto) { ?>
+                <small class="form-text text-danger">*Erro ao adicionar nova despesa, verifique se todos os campos estão prenchidos corretamente.</small>
+
+            <?php  } ?>
+            <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label" style="color: white;">Descrição</label>
+                <input type="text" name="despesa" class="form-control" id="formGroupExampleInput" placeholder="descrição" value="<?= $this->view->produto['despesa'] ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label" style="color: white;">Complemento</label>
+                <input type="text" name="descricao" class="form-control" id="formGroupExampleInput2" placeholder="informações complementares" value="<?= $this->view->produto['descricao'] ?>">
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="formGroupExampleInput2" class="form-label" style="color: white;">Valor</label>
+                        <input type="text" name="valor" class="form-control" id="formGroupExampleInput2" placeholder="R$" value="<?= $this->view->produto['valor'] ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="formGroupExampleInput3" class="form-label" style="color: white;">Já foi pago?</label><br><label for="" style="color: white;">Sim</label>
+                        <input type="checkbox" name="status" value="pago" id="formGroupExampleInput3">
+                    </div>
+
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label" style="color: white;">Categoria</label>
+                <select name="categoria" id="formGroupExampleInput2" class="form-control">
+                    <option value="<?= $this->view->produto['categoria'] ?>">Selecionar Categoria</option>
+                    <?php foreach ($this->view->categorias as $categoria) {
+                        if ($categoria['id_usuario'] == 0 or $categoria['id_usuario'] == $_SESSION['id']) {
+
+                    ?>
+                            <option value="<?= $categoria['nome_categoria'] ?>">
+                                <?= $categoria['nome_categoria'] ?>
+                            </option>
+
+                    <?php }
+                    } ?>
+
+                </select>
+                <label for="formGroupExampleInput3" class="form-label" style="color: yellow;">Não tem a categoria que procura? </label>
+                <a href="/novaCategoria" style="text-decoration: none;">Criar nova categoria</a>
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label" style="color: white;">Repetir despesa</label>
+                <input type="checkbox" name="repetir" id="formGroupExampleInput2" placeholder="informações complementares" value="<?= $this->view->produto['descricao'] ?>">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label" style="color: white;">Data e vencimento</label>
+                <input type="date" name="data_vencimento" class="form-control" id="formGroupExampleInput2" placeholder="Another input placeholder" value="<?= $this->view->produto['data_venciemnto'] ?>" required>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class=" form-control btn btn-primary" onclick="funcao1">Salvar</button>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>

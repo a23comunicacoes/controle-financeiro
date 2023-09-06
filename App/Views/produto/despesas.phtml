@@ -1,0 +1,167 @@
+<div class="row" style="margin-top: 10px;">
+
+    <div class="col-md-4">
+
+    </div>
+
+    <div class="col-md-4">
+        <ol class="list-group list-group-numbered">
+            <button type="button" class="btn btn-danger">
+                Todas as Despesas <span class="badge text-bg-dark">R$:
+                    <?php
+                    $totalDespesas =  $this->view->somaDeTodasAsDespesas['total'];
+                    $totalDespesas =  number_format($totalDespesas, 2, ',', '.');
+                    echo $totalDespesas;
+                    ?>
+                </span>
+            </button>
+            <?php
+            //ALERTA DE CONTA SALVA
+            if (isset($_GET['msg'])) {
+                $msg = $_GET['msg'];
+                if ($msg == "alterado") {
+            ?>
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Muito bem!</h4>
+                        <p>Conta alterada com sucesso!</p>
+                        <hr>
+
+                    </div>
+                <?php } elseif ($msg == "cadastrado") { ?>
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Muito bem!</h4>
+                        <p>Conta cadastrada com sucesso!</p>
+                        <hr>
+
+                    </div>
+            <?php  }
+            }
+            ?>
+            <?php
+
+            date_default_timezone_set('America/Campo_Grande');
+            //DATA ATUAL FROMATO PORTUGUES BRASIL
+            //$DateAndTime = date('d/m/Y');
+            //DATA ATUAL FORMATO AMERICANO PARA COMPRAR DATAS
+            $DateAndTime = date('Y/m/d');
+
+
+            foreach ($this->view->allDespesas as $despesa) {
+
+                $data = new DateTime($despesa['data_vencimento']);
+                $dataFormatada = $data->format('d/m/Y');
+                $dataPagamento = new DateTime($despesa['data_pagamento']);
+                $dataPagamento = $dataPagamento->format('d/m/Y');
+
+                switch ($despesa['mes']) {
+                    case 1:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Janeiro</div>";
+                        break;
+                    case 2:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Fevereiro</div>";
+                        break;
+                    case 3:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Março</div>";
+                        break;
+                    case 4:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Abril</div>";
+                        break;
+                    case 5:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Maio</div>";
+                        break;
+                    case 6:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Junho</div>";
+                        break;
+                    case 7:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Julho</div>";
+                        break;
+                    case 8:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Agosto</div>";
+                        break;
+                    case 9:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Setembro</div>";
+                        break;
+                    case 10:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Outubro</div>";
+                        break;
+                    case 11:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Novembro</div>";
+                        break;
+                    case 12:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Dezembro</div>";
+                        break;
+
+
+                    default:
+                        echo "<div style='color: white;background-color: green; text-align:center';>Mês não informado!</div>";
+                        break;
+                }
+            ?>
+
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+
+                        <div class="fw-bold"><?= $despesa['despesa'] ?></div>
+                        <?= $despesa['descricao'] ?><br>
+
+                        <span class="badge bg-danger rounded-pill">Venceu em <?= $dataFormatada ?></span>
+
+
+                        <?php if ($despesa['status'] == "pago") { ?>
+                            <span class="badge bg-success rounded-pill">Foi pago em <?= $dataPagamento ?></span>
+                        <?php } else { ?>
+                            <form action="/pagarDespesa" method="post">
+                                <input type="hidden" name="id" value="<?= $despesa['id'] ?>">
+                                <input type="hidden" name="status" value="pago">
+                                <button class="btn btn-info">Pagar agora</button>
+                            </form>
+                        <?php } ?>
+                    </div>
+                    <span class="badge bg-secondary rounded-pill">R$:
+                        <?php
+                        $despesa1 = $despesa['valor'];
+                        $despesa1 = number_format($despesa1, 2, ',', '.');
+                        echo $despesa1;
+                        ?>
+                    </span>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <form action="editarDespesa" method="post" name="despesas" id="despesas">
+                                    <input type="hidden" name="id" value="<?= $despesa['id'] ?>">
+                                    <input type="hidden" name="update" value="despesas">
+                                    <button class="dropdown-item" type="submit">Editar</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="excluirDespesa" method="post">
+                                    <input type="hidden" name="delete" value="despesas">
+                                    <input type="hidden" name="id" value="<?= $despesa['id'] ?>">
+                                    <button class="dropdown-item" type="submit">Excluir</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            <?php } ?>
+
+        </ol>
+    </div>
+    <div class="col-md-4" style="margin-top: 10px; border: 1px solid black; overflow-x: scroll;">
+        <h1 style="background-color: gray; color: white; text-align: center;">Publicidade</h1>
+
+        <script language="JavaScript1.1" src="https://t.dynad.net/script/?dc=5550002676;ord=1677716787865;idt_product=158;aff_source=c9757d6c911e4b79bb751195a408af29;cpg=MzkyNTQ5;idt_category=862;idt_banner=3281;idt_url=392549;caf=c9757d6c911e4b79bb751195a408af29;creative=QUZJTElBRE9TX1VPTF9QbGF5X1VPTF9QbGF5XzI1MHgyNTA%3D;click="></script>
+
+        <hr>
+        <a target="_blank" href="https://www.homehost.com.br/afiliados/link.php?a=1242"><img alt="afiliado Homehost" src="https://www.homehost.com.br/afiliados/banners/63625.gif"></a>
+
+
+
+
+    </div>
+</div>
+</div>

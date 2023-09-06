@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-4">
+        <h1>Alterar Receita</h1>
+        <hr>
+        <form action="updateReceita" method="post">
+            <input type="hidden" name="id" value="<?= $this->view->getReceitaById['id'] ?>">
+            <div class="mb-3">
+                <label for="formGroupExampleInput" class="form-label">Valor da Receita</label>
+                <input type="text" name="valor" class="form-control" id="formGroupExampleInput" placeholder="Receita em R$" value="<?= $this->view->getReceitaById['valor'] ?>">
+            </div>
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Descrição</label>
+                <input type="text" name="descricao" class="form-control" id="formGroupExampleInput2" placeholder="descrição" value="<?= $this->view->getReceitaById['descricao'] ?>">
+            </div>
+
+            <div class="mb-3">
+                <label for="formGroupExampleInput2" class="form-label">Data da receita</label>
+                <input type="date" name="data_receita" class="form-control" id="formGroupExampleInput2" value="<?= $this->view->getReceitaById['data_receita'] ?>">
+            </div>
+            <div class="mb-3">
+                <button type="submit" class=" form-control btn btn-primary">Alterar</button>
+                <a href="/receitas" class=" form-control btn btn-danger">Cancelar</a>
+            </div>
+
+        </form>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+</div>

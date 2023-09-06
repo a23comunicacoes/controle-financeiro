@@ -1,0 +1,65 @@
+<ol class="list-group list-group-numbered">
+    <button type="button" class="btn btn-success">
+        Contas pagas <span class="badge text-bg-dark">R$:
+            <?php
+            $contasPagas =  $this->view->Pagos['valor'];
+            $contasPagas = number_format($contasPagas, 2, ',', '.');
+            echo $contasPagas;
+            ?>
+        </span>
+    </button>
+    <?php
+    foreach ($this->view->produto as $despesa) {
+        $data = new DateTime($despesa['data_pagamento']);
+        $data_pagamento = $data->format('d/m/Y');
+        $dataV = new DateTime($despesa['data_vencimento']);
+        $data_vencimento = $dataV->format('d/m/Y');
+
+        if ($despesa['status'] === 'pago') {
+    ?>
+            <li class="list-group-item d-flex justify-content-between align-items-start" style="margin-bottom: 10px;" style="margin-bottom: 10px;">
+                <div class="ms-2 me-auto">
+                    <div class="fw-bold"><?php echo htmlentities($despesa['despesa']); ?></div>
+                    <?php echo htmlentities($despesa['descricao']); ?><br>
+                    <span class="badge bg-secondary rounded-pill">venceu em <?= $data_vencimento ?></span>
+                    <span class="badge bg-success rounded-pill">Foi pago <?= $data_pagamento ?></span>
+                    <form action="/naoFoiPago" method="post">
+                        <input type="hidden" name="id" value="<?= $despesa['id'] ?>">
+                        <input type="hidden" name="status" value="a vencer">
+                        <button class="btn btn-warning">Não foi pago</button>
+                    </form>
+                </div>
+                <span class="badge bg-primary rounded-pill">R$:
+                    <?php
+                    $despesa3 = $despesa['valor'];
+                    $despesa3 = number_format($despesa3, 2, ',', '.');
+
+                    echo $despesa3;
+                    ?>
+                </span>
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <form action="editarDespesa" method="post">
+                                <input type="hidden" name="id" value="<?= $despesa['id'] ?>">
+                                <button class="dropdown-item" type="submit">Editar</button>
+                            </form>
+                        </li>
+                        <li>
+                            <form action="excluirDespesa" method="post">
+                                <input type="hidden" name="id" value="<?= $despesa['id'] ?>">
+                                <button class="dropdown-item" type="submit">Excluir</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+            </li>
+
+    <?php }
+    } ?>
+</ol>

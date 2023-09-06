@@ -1,0 +1,9 @@
+<?php
+
+$query =  "SELECT * FROM despesas as d WHERE MONTH(d.data_vencimento) = :data_vencimento AND d.id_usuario = :id_usuario ORDER BY id DESC";
+$stmt = $this->db->prepare($query);
+$stmt->bindValue(':data_vencimento', $this->__get('data_vencimento'));
+$stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+$stmt->execute();
+ $stmt->fetchAll(\PDO::FETCH_ASSOC);
+?>
